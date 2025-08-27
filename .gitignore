@@ -1,0 +1,8 @@
+GaugeFactoryABI.json
+NonfungiblePositionManagerABI.json
+SplipstreamPoolFactoryABI.json
+SplipstreamPoolFactoryABI.json
+VoterABI.json
+
+node_modules/
+.env
