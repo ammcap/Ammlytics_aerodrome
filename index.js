@@ -2,11 +2,8 @@ const { ethers } = require('ethers');
 const { Pool, Position, TickMath } = require('@uniswap/v3-sdk');
 const { Token } = require('@uniswap/sdk-core');
 
-const dotenv = require('dotenv');
-dotenv.config();
-
 async function main() {
-  const rpcUrl = process.env.ALCHEMY_API_URL;
+  const rpcUrl = 'https://base-mainnet.g.alchemy.com/v2/PLG7HaKwMvU9g5Ajifosm'; // Your Alchemy key
   const provider = new ethers.JsonRpcProvider(rpcUrl);
 
   const userAddress = '0x8A9bBEbA43E3cEc41E7922E13644cE37abE63D2f';
@@ -108,11 +105,11 @@ async function main() {
       // Compute price range in USDC per cbBTC (token0 per token1)
       const sqrtLower = TickMath.getSqrtRatioAtTick(Number(position[5]));
       const dummyPoolLower = new Pool(token0, token1, fee, sqrtLower.toString(), 0, Number(position[5]));
-      const maxPrice = dummyPoolLower.token0Price.toSignificant(6); // Higher USDC per cbBTC at lower tick
+      const maxPrice = dummyPoolLower.token1Price.toSignificant(6); // Higher USDC per cbBTC at lower tick
 
       const sqrtUpper = TickMath.getSqrtRatioAtTick(Number(position[6]));
       const dummyPoolUpper = new Pool(token0, token1, fee, sqrtUpper.toString(), 0, Number(position[6]));
-      const minPrice = dummyPoolUpper.token0Price.toSignificant(6); // Lower USDC per cbBTC at upper tick
+      const minPrice = dummyPoolUpper.token1Price.toSignificant(6); // Lower USDC per cbBTC at upper tick
 
       console.log(`\nStaked Position Token ID: ${tokenId.toString()}`);
       console.log('Details:', {
